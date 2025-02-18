@@ -1,0 +1,53 @@
+[33mcommit 9c6b428113c0b5347a2226e35edcdcd5a64483f7[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mws-wilson[m[33m)[m
+Author: Wilson Gonçalves <wilssp@gmail.com>
+Date:   Tue Feb 18 15:52:54 2025 -0300
+
+    Atualização Para pipe line
+
+[33mcommit d55bc1b687938397918f8d2f44a2a90783b17d36[m
+Author: Wilson Gonçalves <wilssp@gmail.com>
+Date:   Tue Feb 18 15:51:46 2025 -0300
+
+    Atualiza ws-wilson com as últimas alterações da main
+
+[33mcommit 10ee0fb0e33f304e6d02c945684d5a24173caa21[m
+Author: Wilson Gonçalves <wilssp@gmail.com>
+Date:   Tue Feb 18 15:43:28 2025 -0300
+
+    Include Pipeline
+
+[33mcommit 000c683c74047275a0d303706147a380afc9399d[m
+Author: Wilson Gonçalves <wilssp@gmail.com>
+Date:   Tue Feb 18 15:41:02 2025 -0300
+
+    Revisção Pipeline
+
+[33mcommit 7e0d1b0ee018eb8919b460479dc083603320829c[m
+Author: Wilson Gonçalves <wilssp@gmail.com>
+Date:   Tue Feb 18 15:17:19 2025 -0300
+
+    feat: refatoração das rotas de arquivos e atualização do Swagger
+    
+    - Refatorada a classe `FileRoutes` para melhorar organização e segurança
+    - Aplicada autenticação via `AuthMiddleware` na rota `/files`
+    - Atualizado `filePaths` no Swagger para refletir corretamente as rotas
+    - Melhorada a documentação do Swagger com descrições mais claras e uniformes
+    - Elaboração do docker compose.
+
+[33mcommit 9ea6994843ce72a4cbca71200bf513ee4800a783[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m
+Author: Wilson Gonçalves <wilssp@gmail.com>
+Date:   Sat Feb 15 11:39:31 2025 -0300
+
+    S3 configuration, consumption and publication of queues, creation of repositories and controls and use cases
+
+[33mcommit 1356a1e5f620909aadb2caa35b23818163e0028a[m
+Author: Wilson Gonçalves <wilssp@gmail.com>
+Date:   Sat Feb 15 11:34:37 2025 -0300
+
+    include Layers Exceptions
+
+[33mcommit e4b30e0ee220899df427e5b0398597ad79435e57[m
+Author: Wilson Gonçalves <wilssp@gmail.com>
+Date:   Sat Feb 15 11:33:14 2025 -0300
+
+    Revision Application Configuration
