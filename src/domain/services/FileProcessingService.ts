@@ -1,7 +1,6 @@
-import { s3Config } from "@/config/S3Config";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
-
-
+import { s3Config } from "../../config/S3Config";
+import { DomainException } from "../exception/domainException";
 interface FileMessage {
   fileName: string;
   fileContent: string;
@@ -16,17 +15,13 @@ export class FileProcessingService {
 
   async processFile(message: FileMessage): Promise<void> {
     try {
-      console.log("Processing file:", message);
-
       if (!message || !message.fileName || !message.fileContent) {
-        throw new Error("Invalid message format");
+        throw new DomainException("Invalid message format");        
       }
-
       await this.uploadToS3(message.fileName, message.fileContent);
       console.log("File successfully uploaded to S3:", message.fileName);
     } catch (error) {
-      console.error("Error processing file:", error);
-      throw error;
+      throw new DomainException(`Error processing file: ${error}`);            
     }
   }
 
@@ -38,11 +33,9 @@ export class FileProcessingService {
         Body: fileContent,
         ContentType: "application/octet-stream",
       };
-
       await s3Config.send(new PutObjectCommand(params));
     } catch (error) {
-      console.error("Error uploading file to S3:", error);
-      throw error;
+      throw new  DomainException(`Error uploading file to S3: ${error}`);
     }
   }
 }

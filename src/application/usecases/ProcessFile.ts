@@ -1,6 +1,4 @@
-import { RabbitMQFactory } from "@/infrastructure/queue/RabbitMqFactory";
-
-
+import { RabbitMQFactory } from "../../infrastructure/queue/RabbitMqFactory";
 
 export class ProcessFileUseCase {
   constructor(

@@ -1,6 +1,6 @@
-import { FileEntity } from "@/domain/entities/FileEntity";
-import { RedisRepository } from "@/infrastructure/repositories/RedisRepository";
-import { PropsFile } from "@/interfaces/propFile";
+import { FileEntity } from "../../domain/entities/FileEntity";
+import RedisRepository from "../../infrastructure/repositories/RedisRepository";
+import { PropsFile } from "../../interfaces/propFile";
 
 export class SaveFileRedisUseCase {
   constructor(private readonly redisRepository: RedisRepository) {}

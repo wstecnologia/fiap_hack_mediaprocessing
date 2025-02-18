@@ -1,43 +1,55 @@
 import Redis from 'ioredis';
-import { InfrastructureException } from '../exceptions/InfrastructureException';
 
-export class RedisRepository {  
+class RedisRepository {
   private redis: Redis;
 
   constructor() {
     this.redis = new Redis({
-      host: process.env.REDIS_HOST,
-      port: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT, 10) : 6379,
+      host: process.env.REDIS_HOST || 'localhost', 
+      port: Number(process.env.REDIS_PORT) || 6379,
+      socketTimeout: 1000, 
     });
 
-    this.redis.on('error', (err) => {
-      console.error('Erro na conexão com Redis:', err);
-    });
+   
+    this.redis.on('error', (err) => console.error('Erro na conexão com Redis:', err));
   }
-
-  async saveData(key: string, data: any): Promise<void> {
+  
+  async saveData<T>(key: string, data: T, expireInSeconds: number = 3600): Promise<void> {
     try {
-      await this.redis.set(
-        key, 
-        JSON.stringify(data), 
-        'EX', 
-        process.env.REDIX_EXPIREIN ? parseInt(process.env.REDIX_EXPIREIN, 10) : 3600
-      );
+      await this.redis.set(key, JSON.stringify(data), 'EX', expireInSeconds);
     } catch (error) {
-      console.error('Erro ao armazenar no Redis:', error);
-      throw new InfrastructureException('Erro ao armazenar no Redis');
+      console.error(`Erro ao armazenar dados no Redis [Key: ${key}]`, error);
+      throw new Error('Erro ao armazenar dados no Redis');
     }
   }
-
-  async getData(key: string): Promise<any> {
+  
+  async getData<T>(key: string): Promise<T | null> {
     try {
       const data = await this.redis.get(key);
       return data ? JSON.parse(data) : null;
     } catch (error) {
-      console.error('Erro ao recuperar dados do Redis:', error);
-      throw new InfrastructureException('Erro ao recuperar dados do Redis');
+      console.error(`Erro ao recuperar dados do Redis [Key: ${key}]`, error);
+      throw new Error('Erro ao recuperar dados do Redis');
+    }
+  }
+  
+  async getAllKeys(pattern: string): Promise<string[]> {
+    try {
+      return await this.redis.keys(pattern);
+    } catch (error) {
+      console.error(`Erro ao buscar chaves no Redis [Pattern: ${pattern}]`, error);
+      throw new Error('Erro ao buscar chaves no Redis');
+    }
+  }
+  
+  async deleteData(key: string): Promise<void> {
+    try {
+      await this.redis.del(key);
+    } catch (error) {
+      console.error(`Erro ao deletar chave no Redis [Key: ${key}]`, error);
+      throw new Error('Erro ao deletar dados do Redis');
     }
   }
 }
 
-export default new RedisRepository();
+export default RedisRepository; // Exportando a classe, não a instância

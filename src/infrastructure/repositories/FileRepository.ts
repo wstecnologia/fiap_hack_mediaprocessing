@@ -1,7 +1,7 @@
 ///TODO: Refatora --- Implementar a classe S3FileRepository
 
-import { IFileRepository } from '@/domain/repositories/IFileRepository';
 import AWS from 'aws-sdk';
+import { IFileRepository } from '../../domain/repositories/IFileRepository';
 
 
 export class FileRepository implements IFileRepository {

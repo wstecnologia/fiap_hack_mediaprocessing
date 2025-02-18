@@ -1,8 +1,10 @@
+import swaggerUi from 'swagger-ui-express';
 
-import { allRoutes } from "@/infrastructure/web/express/routes";
 import dotenv from "dotenv";
 import express from "express";
 import { RabbitMQFactory } from "../infrastructure/queue/RabbitMqFactory";
+import { allRoutes } from "../infrastructure/web/express/routes";
+import { swaggerSpec } from './swagger';
 
 dotenv.config();
 
@@ -15,9 +17,8 @@ rabbitMq.on()
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })) 
 
-//app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec)) 
-  
-app.use("/api", allRoutes) 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+app.use('/api', allRoutes);
 
 export default app;

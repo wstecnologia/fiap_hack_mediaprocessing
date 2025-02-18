@@ -1,25 +1,26 @@
+import { FileController } from "../../../../application/interfaces/controllers/FileController";
 
-import { FileRepository } from "@/infrastructure/repositories/FileRepository";
-import { FileController } from "@/interfaces/controllers/FileController";
+import RedisRepository from "../../../../infrastructure/repositories/RedisRepository";
+import { AuthMiddleware } from "../../middlewares/authMiddleware";
 import { ExpressAdapter } from "../ExpressAdapter";
 
-
 export class FileRoutes {
-  private _fileRepository: FileRepository  
-  private _fileController: FileController
+  private _fileRepository: RedisRepository;
+  private _fileController: FileController;
+
   constructor(private router: any) {
-    this.router = router
-    this._fileRepository = new FileRepository()    
-    this._fileController = new FileController()
-    
-    this.initiazeRoutes()
+    this.router = router;
+    this._fileRepository = new RedisRepository();
+    this._fileController = new FileController(this._fileRepository);
+
+    this.initializeRoutes();
   }
 
-  private initiazeRoutes() {
-    this.router.get("/files", ExpressAdapter.adaptRoute(this.processFile.bind(this)))         
+  private initializeRoutes() {    
+    this.router.get("/files", AuthMiddleware.getMiddleware(), ExpressAdapter.adaptRoute(this.processFile.bind(this)));
   }
 
-   private async processFile({ body }) {
-     return await this._fileController.execute()
-   }
+  private async processFile({ body }) {
+    return await this._fileController.processAndUploadFiles(); 
+  }
 }

@@ -32,7 +32,7 @@ export class S3Service {
       const uploadResult = await this.s3.upload(params).promise();
       return uploadResult.Location;
     } catch (error) {
-      
+
       throw new InfrastructureException('Erro no upload para S3');
     }
   }

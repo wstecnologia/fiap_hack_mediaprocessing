@@ -1,7 +1,6 @@
-import { PropsFile } from "@/interfaces/propFile";
-import { DomainException } from "../exception/DomainException";
+import { PropsFile } from "../../interfaces/propFile";
+import { DomainException } from "../exception/domainException";
 import { statusFile } from "../shared/constants/FileConstants";
-
 
 export class FileEntity {
   private _file: { type: string; data: number[] };

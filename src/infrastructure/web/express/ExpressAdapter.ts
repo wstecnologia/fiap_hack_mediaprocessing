@@ -1,5 +1,5 @@
-import { AppErrors } from "@/domain/shared/error/AppErrors"
-import { ErrosMessage } from "@/domain/shared/error/ErrosMessage"
+import { AppErrors } from "../../../domain/shared/error/AppErrors"
+import { ErrosMessage } from "../../../domain/shared/error/ErrosMessage"
 
 import { Request, Response } from "express"
 

@@ -1,5 +1,5 @@
-import { IS3Repository } from "@/domain/repositories/IS3Repository";
 import { S3 } from "aws-sdk";
+import { IS3Repository } from "../../domain/repositories/IS3Repository";
 import { InfrastructureException } from "../exceptions/InfrastructureException";
 
 export class S3Repository implements IS3Repository {

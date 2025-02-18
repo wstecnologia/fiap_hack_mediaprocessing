@@ -1,7 +1,5 @@
-
-
 import { S3 } from 'aws-sdk';
-import { ApplicationException } from '../exceptions/ApplicationException';
+import { ApplicationException } from '../exceptions/applicationException';
 
 export class UploadFileS3UseCase {
   private s3: S3;
