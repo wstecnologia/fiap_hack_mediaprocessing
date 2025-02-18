@@ -11,7 +11,7 @@ describe('ApplicationException', () => {
     expect(exception.name).toBe('ApplicationException');
   });
 
-  it('Deve ter a mensagem correta', () => {
+  it('Deve ter a mensagem correta se acontecer exceção.', () => {
     const message = 'Mensagem de erro';
     const exception = new ApplicationException(message);
     expect(exception.message).toBe(message);
