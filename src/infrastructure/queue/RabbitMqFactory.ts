@@ -6,7 +6,6 @@ import { PropsFile } from "../../interfaces/propFile";
 import { InfrastructureException } from "../exceptions/InfrastructureException";
 import RedisRepository from "../repositories/RedisRepository";
 
-
 export class RabbitMQFactory implements IQueue {
 
   constructor(
@@ -70,8 +69,7 @@ export class RabbitMQFactory implements IQueue {
               const parsedMessage = JSON.parse(messageContent);
               if (parsedMessage) {
                 await this.processMessage(parsedMessage);
-              }
-              await this.processMessage(parsedMessage);
+              }              
               channel.ack(msg);
             } catch (error) {
               channel.nack(msg, false, false);

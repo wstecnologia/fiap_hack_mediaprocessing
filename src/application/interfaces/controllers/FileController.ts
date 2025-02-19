@@ -15,6 +15,7 @@ export class FileController {
   private readonly getAllFilesRedisUseCase: GetAllFilesRedisUseCase;
   private readonly uploadFileS3UseCase: UploadFileS3UseCase;
   private readonly rabbitMq: RabbitMQFactory;
+  private readonly rabbitMqNotif: RabbitMQFactory;
 
   constructor(private readonly redisRepository: RedisRepository) {
     this.saveFileRedisUseCase = new SaveFileRedisUseCase(this.redisRepository);
@@ -22,6 +23,7 @@ export class FileController {
     this.getAllFilesRedisUseCase = new GetAllFilesRedisUseCase(this.redisRepository);
     this.uploadFileS3UseCase = new UploadFileS3UseCase();
     this.rabbitMq = new RabbitMQFactory(process.env.RABBIT_EXCHANGE,process.env.RABBIT_QUEUE_RESPONSE,process.env.RABBIT_ROUTING_KEY_RESPONSE)
+    this.rabbitMqNotif = new RabbitMQFactory(process.env.RABBIT_QUEUE_EXCHANGE_NOTIF,process.env.RABBIT_QUEUE_NOTIF,process.env.RABBIT_ROUTING_NOTIF_KEY)
   }
 
   async saveFile(fileProps: PropsFile): Promise<{ message: string; file: FileEntity; s3Url?: string }> {  
@@ -85,6 +87,15 @@ export class FileController {
         };
   
         this.rabbitMq.publish(fileStatusMessage);
+        //email: 'saviodesenv@gmail.com',
+        this.rabbitMqNotif.publish({     
+          message: {
+            email: 'wilssp@gmail.com',
+            subject: "Processing file",
+            message: "File processing please wait",          
+          }
+        })
+
       }
   
       return { message: "Arquivos processados e enviados com sucesso." };
