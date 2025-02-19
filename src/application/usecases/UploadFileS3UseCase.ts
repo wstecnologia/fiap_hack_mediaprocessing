@@ -23,16 +23,23 @@ export class UploadFileS3UseCase {
       if (!fileContent || !(fileContent instanceof Buffer)) {
         throw new ApplicationException("O conteúdo do arquivo é inválido.");
       }
-  
+
       const params = {
         Bucket: this.bucketName,
         Key: fileName,
         Body: fileContent,
-        ContentType: contentType,
+        ContentType: "application/zip" //contentType,                   
       };
-  
+      
+      const url = `https://${this.bucketName}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileName}`
+
       const result = await this.s3.upload(params).promise();
+      
+      console.log(`result: ${result}`)
+
       return result.Location;
+
+
     } catch (error) {
       throw new ApplicationException(error.message || 'Erro ao fazer upload para o S3');
     }

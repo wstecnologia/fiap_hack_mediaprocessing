@@ -43,6 +43,16 @@ export class FileController {
       
       this.rabbitMq.publish(fileStatusMessage)   
       console.log(`s3Url: ${s3Url}`);
+
+      console.log(`fileEntity.email: ${fileEntity.email}`)
+
+      this.rabbitMqNotif.publish(     
+        {
+          email: fileEntity.email ,
+          subject: "Processing file - Succesfuly",
+          message: `${statusFile.PROCESSAMENTO_CONCLUIDO_SUCESSO}  ${s3Url}` ,          
+        }
+      )
       return { message: 'Arquivo armazenado com sucesso', file: fileEntity, s3Url };
       
     } catch (error) {
@@ -71,7 +81,6 @@ export class FileController {
       if (!files.length) {
         return { message: "Nenhum arquivo pendente para upload." };
       }
-  
 
       for (const fileData of files) {
         const fileEntity = FileEntity.create(fileData);
@@ -84,25 +93,27 @@ export class FileController {
           id: fileEntity.id_db,
           status: statusFile.PROCESSAMENTO_CONCLUIDO_SUCESSO,
           link_file: s3Url,
+          email: fileEntity.email
         };
   
-        this.rabbitMq.publish(fileStatusMessage);
-        //email: 'saviodesenv@gmail.com',
-        this.rabbitMqNotif.publish({     
-          message: {
-            email: 'wilssp@gmail.com',
-            subject: "Processing file",
-            message: "File processing please wait",          
-          }
-        })
+        this.rabbitMq.publish(fileStatusMessage);        
+        
+        console.log(`fileEntity.email: ${fileEntity.email}`)
 
+        this.rabbitMqNotif.publish(     
+          {
+            email: fileEntity.email ,
+            subject: "Processing file - Succesfuly",
+            message: `${statusFile.PROCESSAMENTO_CONCLUIDO_SUCESSO}  ${s3Url}` ,          
+          }
+        )
       }
-  
+
       return { message: "Arquivos processados e enviados com sucesso." };
     } catch (error) {
+      
       throw new ApplicationException(error.message || "Erro ao processar arquivos.");
     }
   }
-  
 
 }

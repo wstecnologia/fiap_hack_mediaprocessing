@@ -20,6 +20,7 @@ describe("SaveFileRedisUseCase", () => {
       user_id: "123",
       id_db: "abc",
       file: { data: [116, 101, 115, 116, 45, 100, 97, 116, 97], type: "image/png" },
+      email:""
     };
 
     await saveFileRedisUseCase.execute(fileProps);

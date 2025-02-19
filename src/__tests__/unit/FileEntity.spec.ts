@@ -11,6 +11,7 @@ describe("FileEntity", () => {
         user_id: "user123",
         status: statusFile.PROCESSAMENTO_ANDAMENTO,
         id_db: "db-id-123",
+        email: ""
       };
 
       const fileEntity = FileEntity.create(fileProps);
@@ -27,6 +28,7 @@ describe("FileEntity", () => {
         file: { type: "image/png", data: [1, 2, 3] },
         user_id: "user123",
         id_db: "db-id-123",
+        email:""
       };
 
       const fileEntity = FileEntity.create(fileProps);
@@ -98,6 +100,7 @@ describe("FileEntity", () => {
         user_id: "user123",
         status: statusFile.PROCESSAMENTO_ANDAMENTO,
         id_db: "db-id-123",
+        email: ""
       };
 
       const fileEntity = FileEntity.create(fileProps);
